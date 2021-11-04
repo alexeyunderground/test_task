@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://java.sun.com/xml/ns/javaee"
+      xmlns:name="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My app</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h2>Overlords list</h2>
+<br><br>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Planet</th>
+        </tr>
+        <tr th:each="overlord : ${overlordList}">
+            <td th:utext="${overlord.name}"></td>
+            <td th:utext="${overlord.age}"></td>
+            <td th:each="planet : ${overlord.planetList}" th:text="${planet.name}">
+
+            </td>
+        </tr>
+    </table>
+    <br><br>
+    <input type="submit" value="Create Overlord"
+           onclick="window.location.href='addNewOverlord'">
+        <br><br>
+    <div class="2">
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Operations</th>
+        </tr>
+        <tr th:each="planet : ${planetList}">
+            <td th:utext="${planet.name}"></td>
+            <td >
+                <form th:action="@{deletePlanet}" method="post">
+                    <input type="hidden" name="id" th:value="${planet.id}" />
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <br><br>
+    <input type="submit" value="Create Planet"
+           onclick="window.location.href='addNewPlanet'">
+
+    <h1>Appoint an overlord to rule the planet</h1>
+    <form th:action="@{setOverlordToPlanet}" method="post">
+        <td>Select Overlord</td>
+        <td>
+            <select name="overlord">
+                <option th:each="overlord : ${overlordList}"
+                        th:value="${overlord.getId()}"
+                        th:text="${overlord.name}">
+                </option>
+            </select>
+        </td>
+        <td>Select Planet</td>
+        <td>
+            <select name="planet" id="planet">
+                <option th:each="planet : ${planetList}"
+                        th:value="${planet.getId()}"
+                        th:text="${planet.name}"></option>
+            </select>
+        </td>
+        <input type="submit" value="Appoint"
+               onclick="window.location.href='setOverlordToPlanet'">
+    </form>
+        <form th:action="@{showFreeOverlords}">
+        <h2>Найти повелителей бездельников</h2>
+        <input type="submit" value="Find"
+               onclick="window.location.href='showFreeOverlords'">
+        </form>
+        <form th:action="@{showYoungerOverlords}">
+            <h2>Найти самых молодых повелителей</h2>
+            <input type="submit" value="Find"
+                   onclick="window.location.href='showYoungerOverlords'">
+        </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<h2>All free Overlords</h2>
+<br>
+<table>
+    <tr>
+    <th>Name</th>
+    </tr>
+    <tr th:each="overlord : ${freeOverlords}">
+        <td th:utext="${overlord.name}"></td>
+    </tr>
+</table>
+<a th:href="@{/showAll}">Back</a>
+</body>
+</html>
